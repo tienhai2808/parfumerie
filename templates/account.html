@@ -1,0 +1,152 @@
+{% extends 'home.html' %}
+{% load static %}
+
+{% block style %}
+<link rel="stylesheet" href="{% static 'styles/account.css' %}">
+{% endblock %}
+
+{% block title %}
+  Trang khách hàng | Parfumerie.vn
+{% endblock %}
+
+{% block main %}
+<h1 class="text-center mt-2">Thông tin tài khoản</h1>
+<div class="div-info">
+  <div class="text-center">
+    <strong>Họ tên: </strong>{% if user.first_name and user.last_name %}{{ user.first_name }}{{ user.last_name }}{% else %}Chưa cập nhật{% endif %}
+  </div>
+  <div class="text-center">
+    <strong>Email: </strong>{% if user.email %}{{ user.email }}{% else %}Chưa cập nhật{% endif %}
+  </div>
+  <div class="text-center">
+    <strong>Số điện thoại: </strong>{% if user.profile.phone %}{{ user.profile.phone }}{% else %}Chưa cập nhật{% endif %}
+  </div>
+  <div class="text-center mb-3">
+    <strong>Ngày sinh: </strong>{% if user.profile.dob %}{{ user.profile.dob|date:"d-m-Y" }}{% else %}Chưa cập nhật{% endif %}
+  </div>
+</div>
+<center>
+  <button class="btn btn-account text-light btn-update">
+    CẬP NHẬT THÔNG TIN
+  </button>
+</center>
+<div class="add-info d-none">
+  <div class="div-remove">
+    <i btn-remove class="fa-regular fa-circle-xmark"></i>
+  </div>
+  <center>
+    <h4 class="mb-2">Cập nhật thông tin</h4>
+  </center>
+  <div class="form-info">
+    <form method="post">
+      {% csrf_token %}
+      {{ form_user.as_p }}
+      {{ form_profile.as_p }}
+      <center>
+        <button class="btn btn-account text-light mb-4">Xác nhận</button>
+      </center>
+    </form>
+  </div>
+</div>
+<br>
+<h3 class="text-center">Sổ địa chỉ ({{  user.addresses.count }})</h3>
+{% if user.addresses.count > 0 %}
+<div class="d-flex justify-content-center">
+  <table class="table table-bordered border-primary" style="width: 70%;">
+    <thead>
+      <tr>
+        <th scope="col">Họ tên</th>
+        <th scope="col">Số điện thoại</th>
+        <th scope="col">Địa chỉ</th>
+        <th scope="col">Thành phố</th>
+        <th scope="col">Tỉnh</th>
+        <th scope="col">Xóa</th>
+      </tr>
+    </thead>
+    <tbody>
+      {% for address in user.addresses.all %}
+      <tr>
+        <td>{{ address.shipping_full_name }}</td>
+        <td>{{ address.shipping_phone }}</td>
+        <td>{{ address.shipping_address }}</td>
+        <td>{{ address.shipping_city }}</td>
+        <td>{{ address.shipping_state }}</td>
+        <td>
+          <span id="{{ address.id }}" class="btn-delete badge text-bg-danger" style="cursor: pointer;">Xóa</span>
+        </td>
+      </tr>
+      {% endfor %}
+    </tbody>
+  </table>
+</div>
+<form form-delete method="post">
+  {% csrf_token %}
+  <input hidden type="text" name="id_address">
+</form>
+{% endif %}
+<center>
+  <button class="btn btn-account text-light btn-add">
+    THÊM ĐỊA CHỈ
+  </button>
+</center>
+<div class="add-address d-none">
+  <div class="div-close">
+    <i btn-x class="fa-regular fa-circle-xmark"></i>
+  </div>
+  <center>
+    <h4 class="mb-2">Thêm địa chỉ</h4>
+  </center>
+  <div class="div-form">
+    <form method="post">
+      {% csrf_token %}
+      {{ form_address.as_p }}
+      <center>
+        <button class="btn btn-account text-light mb-4">Xác nhận</button>
+      </center>
+    </form>
+  </div>
+</div>
+<br>
+<h3 class="text-center">Đơn hàng ({{  user.orders.count }})</h3>
+{% if user.orders.count > 0 %}
+<div class="d-flex justify-content-center">
+  <table class="table table-bordered border-primary" style="width: 70%;">
+    <thead>
+      <tr>
+        <th scope="col">Thời gian đặt</th>
+        <th scope="col">Thời gian nhận</th>
+        <th scope="col">Tổng đơn</th>
+        <th scope="col">Thanh toán</th>
+        <th scope="col">Trạng thái</th>
+        <th scope="col">Chi tiết</th>
+      </tr>
+    </thead>
+    <tbody>
+      {% for order in user.orders.all|dictsortreversed:"created_at" %}
+      <tr>
+        <td>{{ order.created_at|date:"H:i, d/m/Y" }}</td>
+        <td>
+          {% if order.date_shipped %}
+          {{ order.date_shipped|date:"H:i, d/m/Y" }}
+          {% else %}
+          Đang cập nhật
+          {% endif %}
+        </td>
+        <td>{{ order.amount_paid }}₫</td>
+        <td>{{ order.payment_method }}</td>
+        <td>{{ order.status }}</td>
+        <td>
+          <a href="/account/ordered/{{ order.id }}/" class="deco-none">Xem chi tiết</a>
+        </td>
+      </tr>
+      {% endfor %}
+    </tbody>
+  </table>
+</div>
+<br><br>
+{% endif %}
+{% endblock %}
+
+{% block script %}
+<script src="{% static 'scripts/account.js' %}"></script>
+{% endblock %}

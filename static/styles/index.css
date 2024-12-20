@@ -1,0 +1,51 @@
+.bg-navy {
+  background-color: #283d5a !important;
+}
+
+.font-enriqueta {
+  font-family: 'Enriqueta', sans-serif !important;
+}
+
+.search-form {
+  border-radius: 30px !important;
+}
+
+.text-center {
+  text-align: center;
+}
+
+.deco-none {
+  text-decoration: none;
+}
+
+.perfume {
+  padding-bottom: 20px;
+}
+
+.price {
+  font-size: 20px;
+}
+
+.div-img a {
+  overflow: hidden;
+  aspect-ratio: 1/1;
+}
+
+.div-img img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.message {
+  display: flex;
+  justify-content: space-between;
+}
+
+.close-mess {
+  cursor: pointer;
+}
+
+.close-mess i {
+  font-size: 14px;
+}

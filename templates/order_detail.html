@@ -1,0 +1,39 @@
+{% extends 'home.html' %}
+  
+{% block title %}
+  Parfumerie.vn - Thông tin đơn hàng
+{% endblock %}
+
+{% block main %}
+<h1 class="text-center mt-2">Thông tin đơn hàng</h1>
+<center>
+  Thời gian đặt hàng: {{ order.created_at|date:"H:i, d/m/Y" }} <br>
+  Thời gian nhận hàng: {% if order.date_shipped %}{{ order.date_shipped|date:"H:i, d/m/Y" }}{% else %}Đang cập nhật{% endif %} <br>
+  Họ tên người nhận: {{ order.full_name }} <br>
+  Số điện thoại người nhận: {{ order.phone }} <br>
+  Địa chỉ nhận hàng: {{ order.shipping_address }} <br>
+  Giá trị đơn hàng: {{ order.amount_paid }}₫ <br>
+  Phương thức thanh toán: {{ order.payment_method }} <br>
+  Trạng thái đơn hàng: {{ order.status }} <br>
+  <br>
+  <h3> Chi tiết đơn hàng </h3>
+  <table class="table table-bordered border-primary" style="width: 65%;">
+    <thead>
+      <tr>
+        <th scope="col">Sản phẩm</th>
+        <th scope="col">Số lượng</th>
+        <th scope="col">Giá</th>
+      </tr>
+    </thead>
+    <tbody>
+      {% for item in order.items.all %}
+      <tr>
+        <td>{{ item.product.title }}</td>
+        <td>{{ item.quantity }}</td>
+        <td>{{ item.price }}₫</td>
+      </tr>
+      {% endfor %}
+    </tbody>
+  </table>
+</center>
+{% endblock %}

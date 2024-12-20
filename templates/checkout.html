@@ -1,0 +1,103 @@
+{% extends 'home.html' %}
+{% load static %}
+
+{% block style %}
+<link rel="stylesheet" href="{% static 'styles/checkout.css' %}">
+{% endblock %}
+  
+{% block title %}
+  Parfumerie.vn - Thanh toán đơn hàng
+{% endblock %}
+
+{% block main %}
+<h1 class="text-center mt-2">Thanh toán đơn hàng</h1>
+<div class="container">
+  <div class="row w-100">
+    <div class="col-7 px-3 border-end">
+      <h3 class="text-center mb-3">Thông tin mua hàng</h3>
+      <div><strong>Địa chỉ giao hàng:</strong></div>
+      <form method="POST">
+        {% csrf_token %}
+        {% if addresses %}
+        {% for address in addresses %}
+        <div><input type="checkbox" name="id_address" value="{{ address.id }}" class="me-1">Họ tên: {{ address.shipping_full_name }} - Số điện thoại: {{ address.shipping_phone }} </div>
+        <div class="ps-3 mb-2">{{ address.shipping_address }} - {{ address.shipping_city }} - {{ address.shipping_state }}</div>
+        {% endfor %}
+        <div><input type="checkbox" id="newaddress" class="me-1">Địa chỉ khác</div>
+        {% endif %}
+        <div class="form-newaddress">
+          <p>
+            <label for="shipping_full_name">Họ tên:</label>
+            <input type="text" id="full_name" name="full_name" {% if not addresses %}required{% endif %} class="input-address">
+          </p>
+          <p>
+            <label for="phone">Số điện thoại:</label>
+            <input type="text" id="phone" name="phone" {% if not addresses %}required{% endif %} class="input-address">
+          </p>
+          <p>
+            <label for="address">Địa chỉ:</label>
+            <input type="text" name="address" id="address" {% if not addresses %}required{% endif %} class="input-address">
+          </p>
+          <p>
+            <label for="city">Thành phố:</label>
+            <input type="text" name="city" id="city" {% if not addresses %}required{% endif %} class="input-address">
+          </p>
+          <p>
+            <label for="state">Tỉnh:</label>
+            <input type="text" name="state" id="state" {% if not addresses %}required{% endif %} class="input-address">
+          </p>
+        </div>
+        <p>
+          <label for="payment-method"><strong>Phương thức thanh toán:</strong></label>
+          <select name="payment_method" id="payment-method" class="input-address">
+            <option value="cod">Thanh toán khi giao hàng</option>
+            <option value="bank">Chuyển khoản qua ngân hàng</option>
+          </select>
+          <div class="banking d-none">
+            <div><strong>Bước 1:</strong> Quý Khách Hàng vui lòng chọn hình thức "Chuyển khoản qua ngân hàng" và Bấm Đặt hàng.</div>
+            <div><strong>Bước 2:</strong> Quý Khách Hàng vui lòng thanh toán đơn hàng theo thông tin sau:
+              <div>- Cao Tiến Hải</div>
+              <div>- STK: 5180923739</div>
+              <div>- Ngân hàng BDV</div>
+              <div>- Nội dung: Tên Quý Khách Hàng + Số điện thoại</div>
+            </div>
+            <div><strong>Bước 3:</strong> Nhân viên CSKH của Parfumerie.vn sẽ liên hệ với Quý Khách Hàng để xác nhận thanh toán và xử lý đơn hàng.</div>
+          </div>
+        </p>
+        <center>
+          <button class="btn btn-payment text-light">ĐẶT HÀNG</button>
+        </center>
+      </form>
+      <br><br>
+    </div>
+    <div class="col-5 px-3 border-start">
+      <h3 class="text-center mb-3">Đơn hàng ({{cart_item_count}} sản phẩm)</h3>
+      {% for item in cart_items %}
+      <div class="row w-100 mb-2">
+        <div class="col-2 cart-item-img">
+          <img src="{{ item.product.img1.url }}" alt="Ảnh sản phẩm">
+        </div>
+        <div class="col-8 cart-item-body">
+          <div>
+            <a href="/perfumes/{{ item.product.slug }}/" class="deco-none text-dark">{{ item.product.title|truncatechars:33 }}</a>
+            <div class="cart-item-info">{{ item.product.gender.name|slice:"9:" }}/{{ item.product.origin }}/{{ item.product.volume }}ml</div>
+            <div class="cart-item-quantity">{{ item.quantity }} sản phẩm</div>
+          </div>
+        </div>
+        <div class="col-2 d-flex justify-content-end" style="align-items: center;">
+          <div style="font-size: 18px;">{{ item.total_price }}₫</div>
+        </div>
+      </div>
+      {% endfor %}
+      <div class="total-cart">
+        <div>Tổng cộng: <span>{{ total_cart }}₫</span></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+{% endblock %}
+
+{% block script %}
+<script src="{% static 'scripts/checkout.js' %}"></script>
+{% endblock %}

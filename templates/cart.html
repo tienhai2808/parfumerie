@@ -1,0 +1,63 @@
+{% extends 'home.html' %}
+{% load static %}
+
+{% block style %}
+<link rel="stylesheet" href="{% static 'styles/cart.css' %}">
+{% endblock %}
+
+{% block title %}
+  Giỏ hàng | Parfumerie.vn
+{% endblock %}
+
+{% block main %}
+<h1 class="text-center mt-2">Giỏ hàng ({{ cart_item_count }} sản phẩm)</h1>
+<div class="container">
+{% for item in cart_items %}
+  <div class="div-cart-item row w-100">
+    <div class="col-1 cart-item-img">
+      <img src="{{ item.product.img1.url }}" alt="Ảnh sản phẩm">
+    </div>
+    <div class="col-5 pro-quan">
+      <div class="ps-5">
+        <div class="mb-2">
+          <a href="/perfumes/{{ item.product.slug }}/" class="deco-none text-dark">Nước hoa{{ item.product.title }}</a>
+        </div>
+        <div>Số lượng: <input type="number" class="quantity" data-id="{{ item.product.id }}" old="{{ item.quantity }}" min="1" max="{{ item.product.stock }}" value="{{ item.quantity }}"></div>
+      </div>
+    </div>
+    <div class="col-3"></div>
+    <div class="col-2 div-item-price">
+      <div class="cart-item-price">
+        {{ item.total_price }}₫
+      </div>
+    </div>
+    <div class="col-1 div-item-action">
+      <button class="btn btn-remove text-light" product-id="{{ item.product.id }}">Xóa</button>
+    </div>
+  </div>
+  <form form-delete method="post">
+    {% csrf_token %}
+    <input hidden type="text" name="delete">
+  </form>
+{% endfor %}
+  <div class="div-update-cart w-100 d-none">
+    <form method="post" form-data>
+      {% csrf_token %}
+      <input hidden type="text" name="update">
+      <button class="btn btn-update text-light">Cập nhật giỏ hàng</button>
+    </form>
+  </div>
+  {% if cart_item_count > 0 %}
+  <div class="div-total-cart w-100">
+    <div>
+      <strong>Thành tiền: </strong> <span>{{ total_cart }}₫</span>
+    </div>
+    <a href="/checkout/{{ request.user.username }}/" class="btn btn-buy text-light">ĐẶT HÀNG</a>
+  </div>
+  {% endif %}
+</div>
+{% endblock %}
+
+{% block script %}
+<script src="{% static 'scripts/cart.js' %}"></script>
+{% endblock %}

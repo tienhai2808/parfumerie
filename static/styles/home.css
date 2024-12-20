@@ -1,0 +1,13 @@
+.div-gender {
+  margin: 0 6.3vw;
+}
+
+.div-gender a {
+  overflow: hidden;
+}
+
+.div-gender a img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}

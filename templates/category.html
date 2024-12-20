@@ -1,0 +1,57 @@
+{% extends 'home.html' %}
+{% load static %}
+
+{% block style %}
+<link rel="stylesheet" href="{% static 'styles/category.css' %}">
+{% endblock %}
+
+{% block title %}
+  {% if cat_type == 'Gender' %}
+  Cửa Hàng {{ cat.name|title }} Chính Hãng | Parfumerie.vn
+  {% else %}
+  Mua nước hoa {{ cat.name }} Chính Hãng tại Parfumerie | Parfumerie.vn
+  {% endif %}
+{% endblock %}
+
+{% block main %}
+<h1 class="text-center mt-2">{% if cat_type == 'Gender' %}{{ cat.name }}{% else %}Nước hoa {{ cat.name }}{%endif%}</h1>
+<br>
+<div class="div-products">
+  <div class="d-flex justify-content-end">
+    <form id="form-orderby">
+      <label for="orderby"><strong>Sắp xếp theo: </strong></label>
+      <select name="orderby" id="orderby" class="select-orderby">
+        <option {% if not orderby or orderby == 'new_product' %} selected {% endif %} value="new_product">Sản phẩm mới nhất</option>
+        <option {% if orderby == 'high_purchase' %} selected {% endif %} value="high_purchase">Sản phẩm bán chạy</option>
+        <option {% if orderby == 'low_price' %} selected {% endif %} value="low_price">Giá từ thấp tới cao</option>
+        <option {% if orderby == 'high_price' %} selected {% endif %} value="high_price">Giá từ cao xuống thấp</option>
+      </select>
+    </form>
+  </div>
+  <br>
+  <div class="row justify-content-start">
+    {% for perfume in perfumes %}
+    <div class="col-3 perfume">
+      <div class="div-img">
+        <a href="/perfumes/{{ perfume.slug }}/">
+          <img src="{{ perfume.img1.url }}" style="mix-blend-mode: multiply;" alt="Ảnh sản phẩm">
+        </a>
+      </div>
+      <div class="d-flex justify-content-center">
+        <a href="/perfumes/{{ perfume.slug }}/" class="deco-none text-dark">
+          {{ perfume.title|truncatechars:30 }}
+        </a>
+      </div>
+      <div class="d-flex justify-content-center price mb-2">
+        {{ perfume.price }}₫
+      </div>
+    </div>
+    {% endfor %}
+  </div>
+</div>
+<br><br>
+{% endblock %}
+
+{% block script %}
+<script src="{% static 'scripts/category.js' %}"></script>
+{% endblock %}

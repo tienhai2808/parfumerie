@@ -1,0 +1,29 @@
+.div-products {
+  margin: 0 10vw;
+}
+
+.form-search {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  justify-content: center;
+}
+
+.form-search input {
+  font-size: 18px;
+  width: 30vw;
+  background-color: rgb(220, 220, 220);
+  border-radius: 8px;
+  padding: 5px 10px;
+}
+
+.form-search button {
+  background-color: #283d5a !important;
+  font-size: 18px;
+}
+
+.select-orderby {
+  background-color: rgb(220, 220, 220);
+  border-radius: 6px;
+  padding: 0px 5px;
+}

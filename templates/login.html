@@ -1,0 +1,31 @@
+{% extends 'home.html' %}
+{% load static %}
+
+{% block style %}
+<link rel="stylesheet" href="{% static 'styles/account.css' %}">
+{% endblock %}
+
+{% block title %}
+  Đăng nhập tài khoản | Parfumerie.vn
+{% endblock %}
+
+{% block main %}
+<br>
+<center>
+  <img src="{% static 'images/user.png' %}" class="user-img" alt="Ảnh người dùng">
+</center>
+<h1 class="text-center">Đăng nhập</h1>
+<form method="post">
+  {% csrf_token %}
+  <center>
+    {{ form.as_p }}
+    <button class="btn btn-account text-light">
+      ĐĂNG NHẬP
+    </button>
+  </center>
+</form>
+{% endblock %}
+
+{% block script %}
+<script src="{% static 'scripts/account.js' %}"></script>
+{% endblock %}

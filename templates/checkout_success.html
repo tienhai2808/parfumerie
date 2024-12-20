@@ -1,0 +1,40 @@
+{% extends 'home.html' %}
+  
+{% block title %}
+  Parfumerie.vn - Thanh toán thành công
+{% endblock %}
+
+{% block main %}
+<h1 class="text-center mt-2">Thanh toán thành công</h1>
+<h3 class="text-center mt-2">Thông tin đơn hàng</h3>
+<center>
+  Họ tên người nhận: {{ recent_order.full_name }} <br>
+  Số điện thoại người nhận: {{ recent_order.phone }} <br>
+  Địa chỉ nhận hàng: {{ recent_order.shipping_address }} <br>
+  Giá trị đơn hàng: {{ recent_order.amount_paid }}₫ <br>
+  Phương thức thanh toán: {{ recent_order.payment_method }} <br>
+  Trạng thái đơn hàng: {{ recent_order.status }} <br>
+  <br>
+  <h5> Chi tiết đơn hàng </h5>
+  <table class="table table-bordered border-primary" style="width: 65%;">
+    <thead>
+      <tr>
+        <th scope="col">Sản phẩm</th>
+        <th scope="col">Số lượng</th>
+        <th scope="col">Giá</th>
+      </tr>
+    </thead>
+    <tbody>
+      {% for item in recent_order.items.all %}
+      <tr>
+        <td>{{ item.product.title }}</td>
+        <td>{{ item.quantity }}</td>
+        <td>{{ item.price }}₫</td>
+      </tr>
+      {% endfor %}
+    </tbody>
+  </table>
+  <br>
+  <a href="/account/ordered/{{ recent_order.id }}/" class="btn text-light" style="background-color: #283d5a">Theo dõi đơn hàng</a>
+</center>
+{% endblock %}

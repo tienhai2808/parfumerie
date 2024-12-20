@@ -1,0 +1,45 @@
+.user-img {
+  width: 10vw;
+}
+
+.btn-account {
+  background-color: #283d5a !important;
+}
+
+.input-account {
+  background-color: rgb(220, 220, 220);
+  border-radius: 6px;
+  padding: 0 5px;
+}
+
+.div-info div {
+  font-size: 18px;
+  margin-bottom: 5px;
+}
+
+.add-address, .add-info {
+  position: fixed;
+  top: 25%;
+  right: 30%;
+  width: 40vw;
+  height: auto;
+  z-index: 99; 
+  background-color: white;
+  padding: 20px 50px;
+  border: 2px solid black;
+}
+
+.div-close, .div-remove {
+  display: flex;
+  justify-content: end;
+  margin-bottom: 20px;
+}
+
+.div-close i, .div-remove i {
+  cursor: pointer;
+}
+
+.div-form, .form-info {
+  display: flex;
+  justify-content: center;
+}

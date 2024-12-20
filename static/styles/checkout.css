@@ -1,0 +1,60 @@
+.cart-item-img {
+  aspect-ratio: 1/1;
+  overflow: hidden;
+  border-radius: 3px;
+  border: .7px solid #283d5a
+}
+
+.cart-item-img img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.cart-item-body {
+  display: flex;
+  align-items: center;
+}
+
+
+.cart-item-info {
+  font-size: 14px;
+  color: gray;
+}
+
+.cart-item-quantity {
+  font-size: 18px;
+}
+
+.total-cart {
+  display: flex;
+  justify-content: end;
+  align-items: center;
+}
+
+.total-cart div {
+  font-size: 18px;
+}
+
+.total-cart div span {
+  font-size: 22px;
+}
+
+.btn-payment {
+  background-color: #283d5a !important;
+  padding: 5px 15px;
+  font-size: 16px;
+}
+
+.input-address {
+  background-color: rgb(220, 220, 220);
+  border-radius: 6px;
+  padding: 0 5px;
+}
+
+.banking {
+  margin: 0 30px;
+  padding: 0 30px;
+  border: 1px solid #283d5a;
+  border-radius: 5px;
+}
